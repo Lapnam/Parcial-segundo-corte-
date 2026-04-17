@@ -1,5 +1,5 @@
 const mysql = require('mysql2/promise');
-const config = require('../env/mysqlConfig');
+const config = require('../env/patrimonioConfig');
 
 const pool = mysql.createPool(config);
 

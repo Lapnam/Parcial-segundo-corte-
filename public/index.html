@@ -1,43 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Test index</title>
+    <meta charset="UTF-8">
+    <title>Gestión de Espacios Culturales</title>
 </head>
-
 <body>
-  <div>
-    <h1>SQL Operations</h1>
 
-    <section>
-      <h2>Post Operation</h2>
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="birthdate">Birthdate:</label><br>
-        <input type="date" id="birthdate" name="birthdate" required><br><br>
+    <h1>Gestión de Espacios Culturales</h1>
 
-        <button id="postBtn">Send</button>
-      <p id="postSqlResult"></p>
-    </section>
+    <!-- REGISTRAR ESPACIO -->
+    <h2>Registrar Espacio</h2>
 
-    <section>
-      <h2>Get All Entries</h2>
-      <button id="getAllBtn">Get All</button>
-      <ul id="getAllResult"></ul>
-    </section>
+    <input id="nombre" placeholder="Nombre del espacio"><br><br>
+    <input id="capacidad" type="number" placeholder="Capacidad"><br><br>
 
-    <section>
-      <h2>Get Entry by ID</h2>
-        <label for="id">id:</label><br>
-        <input type="text" id="id" name="id" required><br><br>
-        <button id="getOneBtn">Send</button>
-      <ul id="getOneResult"></ul>
-    </section>
-  </div>
+    <select id="estado">
+        <option value="operativo">Operativo</option>
+        <option value="no_operativo">No operativo</option>
+    </select><br><br>
 
-  <script src="./js/sql.js"></script>
+    <input id="dependencia" placeholder="Dependencia"><br><br>
+
+    <button id="crearEspacioBtn">Crear Espacio</button>
+
+    <p id="resultadoEspacio"></p>
+
+    <hr>
+
+    <!-- CREAR RESERVA -->
+    <h2>Crear Reserva</h2>
+
+    <input id="espacio_id" type="number" placeholder="ID del espacio"><br><br>
+    <input id="fecha" type="date"><br><br>
+    <input id="hora_inicio" type="time"><br><br>
+    <input id="hora_fin" type="time"><br><br>
+    <input id="aforo" type="number" placeholder="Aforo"><br><br>
+
+    <button id="crearReservaBtn">Crear Reserva</button>
+
+    <p id="resultadoReserva"></p>
+
+    <hr>
+
+    <!-- CONSULTAR -->
+    <h2>Consultar Reserva</h2>
+
+    <input id="reserva_id" type="number" placeholder="ID reserva"><br><br>
+
+    <button id="consultarReservaBtn">Consultar</button>
+
+    <ul id="resultadoConsulta"></ul>
+
+    <!-- SCRIPT -->
+    <script src="js/sql.js"></script>
+
 </body>
-
 </html>

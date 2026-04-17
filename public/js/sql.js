@@ -1,83 +1,83 @@
-// Post Elements
-const postButton = document.getElementById("postBtn");
-const nameInput = document.getElementById("name");
-const dateInput = document.getElementById("birthdate");
+/// 🔹 ===== REGISTRAR ESPACIO =====
+const btnEspacio = document.getElementById("crearEspacioBtn");
 
-//Get Elements
-const getAllButton = document.getElementById("getAllBtn");
-const idInput = document.getElementById("id");
-const getOneButton = document.getElementById("getOneBtn");
-
-postButton.addEventListener('click', async function () {
+btnEspacio.addEventListener('click', async function () {
     const data = {
-        name: nameInput.value,
-        birthdate: dateInput.value
+        nombre: document.getElementById("nombre").value,
+        capacidad: document.getElementById("capacidad").value,
+        estado: document.getElementById("estado").value,
+        dependencia: document.getElementById("dependencia").value
     };
 
     try {
-        const response = await fetch('/test', {
+        const response = await fetch('/espacios', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
 
-        const message = await response.text();
-        document.getElementById('postSqlResult').innerText = message;
+        const result = await response.json();
+        document.getElementById('resultadoEspacio').innerText = JSON.stringify(result);
 
     } catch (error) {
-        console.error('Error:', error);
-        document.getElementById('postSqlResult').innerText = 'Error sending the form.';
+        console.error(error);
     }
 });
 
-getAllButton.addEventListener('click', async function () {
+
+// 🔹 ===== CREAR RESERVA =====
+const btnReserva = document.getElementById("crearReservaBtn");
+
+btnReserva.addEventListener('click', async function () {
+    const data = {
+        espacio_id: document.getElementById("espacio_id").value,
+        fecha: document.getElementById("fecha").value,
+        hora_inicio: document.getElementById("hora_inicio").value,
+        hora_fin: document.getElementById("hora_fin").value,
+        aforo: document.getElementById("aforo").value
+    };
+
     try {
-        const response = await fetch('/test');
-        const data = await response.json();
-
-        const list = document.getElementById('getAllResult');
-        list.innerHTML = '';
-
-        if (data.length === 0) {
-            list.innerHTML = '<li>There is no info</li>';
-            return;
-        }
-
-        data.forEach(entry => {
-            const li = document.createElement('li');
-            li.textContent = JSON.stringify(entry);
-            list.appendChild(li);
+        const response = await fetch('/reservas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
         });
 
+        const result = await response.json();
+        document.getElementById('resultadoReserva').innerText = JSON.stringify(result);
+
     } catch (error) {
-        console.error('Error getting data:', error);
-        document.getElementById('getAllResult').innerHTML = '<li>Error obtaining info.</li>';
+        console.error(error);
     }
 });
 
-getOneButton.addEventListener('click', async function () {
-    const id = idInput.value;
-    try {
-        const response = await fetch(`/test/${id}`);
-        const data = await response.json();
-        const resultContainer = document.getElementById('getOneResult');
-        resultContainer.innerHTML = '';
 
-        if (!data || Object.keys(data).length === 0) {
-            resultContainer.innerHTML = '<li>There is no info</li>';
+// 🔹 ===== CONSULTAR RESERVA =====
+const btnConsultar = document.getElementById("consultarReservaBtn");
+
+btnConsultar.addEventListener('click', async function () {
+    const id = document.getElementById("reserva_id").value;
+
+    try {
+        const response = await fetch(`/reservas/${id}`);
+        const data = await response.json();
+
+        const container = document.getElementById("resultadoConsulta");
+        container.innerHTML = "";
+
+        if (!data || data.error) {
+            container.innerHTML = "<li>No encontrada</li>";
             return;
         }
 
         Object.entries(data).forEach(([key, value]) => {
-            const li = document.createElement('li');
+            const li = document.createElement("li");
             li.textContent = `${key}: ${value}`;
-            resultContainer.appendChild(li);
+            container.appendChild(li);
         });
 
     } catch (error) {
-        console.error('Error getting data:', error);
-        document.getElementById('getOneResult').innerHTML = '<li>Error</li>';
+        console.error(error);
     }
 });
